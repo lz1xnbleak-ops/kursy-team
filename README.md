@@ -1,82 +1,42 @@
-# Сайт для продажи курсов (KursyTeam)
+# Сайт для продажи курсов
 
-Фронтенд-приложение на **React + Vite** с маршрутизацией через **React Router** и автоматическим деплоем на **Netlify**.
+Фронтенд-приложение на React + Vite с настроенным CI/CD на платформе Netlify.
 
-## 🌐 Ссылки на проект
-
-- **Рабочий сайт (Production):** [https://kursy-team.netlify.app](https://kursy-team.netlify.app)
-- **GitHub репозиторий:** [https://github.com/lz1xnbleak-ops/kursy-team](https://github.com/lz1xnbleak-ops/kursy-team)
+## Ссылка на проект
+- **Production сайт:** https://kursy-team.netlify.app
 
 ---
 
-## 📄 Страницы проекта
+## Страницы
+- Главная: `/`
+- Регистрация: `/register`
+- Вход: `/login`
 
-1. **Главная страница (`/`):** [https://kursy-team.netlify.app/](https://kursy-team.netlify.app/) — каталог курсов с описанием, ценами и кнопками записи.
-2. **Вход (`/login`):** [https://kursy-team.netlify.app/login](https://kursy-team.netlify.app/login) — форма входа в личный кабинет.
-3. **Регистрация (`/register`):** [https://kursy-team.netlify.app/register](https://kursy-team.netlify.app/register) — форма создания нового аккаунта.
+## Локальный запуск
 
-> **Примечание по роутингу:** Все 3 страницы открываются как по навигации внутри сайта, так и по **прямой ссылке** (при обновлении страницы через `F5` ошибка `404 Not Found` не возникает благодаря файлу `public/_redirects`).
+1. Клонировать репозиторий:
+```bash
+git clone https://github.com/lz1xnbleak-ops/kursy-team.git
+cd kursy-team
+```
 
----
+2. Установить зависимости:
+```bash
+npm install
+```
 
-## 🚀 Локальный запуск проекта
+3. Запустить dev-сервер:
+```bash
+npm run dev
+```
 
-### Требования
-- **Node.js** (версия 18+ или 20+)
-- **npm** (версия 9+)
+4. Собрать production-билд:
+```bash
+npm run build
+```
 
-### Шаги запуска:
+## Как устроен деплой (CI/CD)
 
-1. **Клонировать репозиторий:**
-   ```bash
-   git clone https://github.com/lz1xnbleak-ops/kursy-team.git
-   cd kursy-team
-   ```
-
-2. **Установить зависимости:**
-   ```bash
-   npm install
-   ```
-
-3. **Запустить локальный сервер для разработки:**
-   ```bash
-   npm run dev
-   ```
-   Сервер запустится по адресу: `http://localhost:5173`.
-
-4. **Собрать проект для production:**
-   ```bash
-   npm run build
-   ```
-   Собранные статические файлы будут сохранены в папку `dist/`.
-
----
-
-## ⚙️ Как работает деплой (CI/CD на Netlify)
-
-1. **Интеграция с GitHub:**
-   - Репозиторий подключен к платформе Netlify.
-   - Базовая ветка деплоя — `main`.
-
-2. **Настройки сборки (Build settings):**
-   - **Base directory:** корень проекта (`.`)
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-
-3. **Автодеплой (Continuous Deployment):**
-   - При слиянии (merge) любого Pull Request в ветку `main` Netlify автоматически запускает сборку и выкатывает свежую версию на [https://kursy-team.netlify.app](https://kursy-team.netlify.app).
-
-4. **Deploy Previews:**
-   - Для каждого созданного Pull Request Netlify автоматически генерирует отдельную тестовую ссылку (Deploy Preview) для предварительного тестирования изменений до их попадания в продакшн.
-
-5. **SPA-маршрутизация (Single Page Application):**
-   - В папке `public/` размещен конфигурационный файл `_redirects` со следующим содержимым:
-     ```text
-     /*    /index.html   200
-     ```
-   - Это правило перенаправляет все запросы к несуществующим статическим файлам на `index.html`, позволяя `react-router-dom` обрабатывать маршруты на стороне клиента без ошибки `404 Not Found`.
-
----
-
-## 👥 Команда разработки
-- **KursyTeam DevOps & Frontend**
+1. Защита ветки main: Прямой пуш запрещён. Все изменения попадают только через Pull Request.
+2. Deploy Preview: При открытии Pull Request Netlify автоматически собирает проект и генерирует уникальную ссылку для предварительного тестирования изменений.
+3. Автодеплой: После одобрения и слияния (merge) Pull Request в ветку main, Netlify автоматически выполняет команду npm run build и публикует содержимое папки dist на Netlify.
